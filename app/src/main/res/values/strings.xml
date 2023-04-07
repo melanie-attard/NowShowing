@@ -7,8 +7,8 @@
     <string name="nav_header_desc">User Profile</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_item1">Home</string>
+    <string name="menu_item2">Favourites</string>
+    <string name="menu_item3">Profile</string>
     <string name="menu_btn">Log Out</string>
 </resources>
