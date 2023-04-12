@@ -16,21 +16,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ShowRestRepository {
-    private static ShowRestRepository instance = null;
+public class RestRepository {
+    private static RestRepository instance = null;
     private API api;
 
-    private ShowRestRepository() {
+    private RestRepository() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(API.class);
     }
 
-    public static synchronized ShowRestRepository getInstance() {
+    public static synchronized RestRepository getInstance() {
         if (instance == null)
         {
-            instance = new ShowRestRepository();
+            instance = new RestRepository();
         }
         return instance;
     }

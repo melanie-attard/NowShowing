@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="18dp"
         android:hint="@string/search_hint"
         android:backgroundTint="@color/md_theme_light_onPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,5 +22,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/search_bar"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="2dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

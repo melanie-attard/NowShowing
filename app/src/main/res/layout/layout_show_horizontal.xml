@@ -9,7 +9,7 @@
     android:focusable="true"
     app:cardCornerRadius="10dp"
     app:strokeColor="@color/md_theme_light_onBackground"
-    app:strokeWidth="3dp"
+    app:strokeWidth="1dp"
     style="?attr/materialCardViewElevatedStyle">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +20,8 @@
             android:id="@+id/show_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/genres"/>
@@ -28,7 +30,8 @@
             android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="8dp"
             app:layout_constraintTop_toBottomOf="@id/show_name"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -37,6 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/show_img_description"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
