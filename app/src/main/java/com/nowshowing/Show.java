@@ -14,10 +14,12 @@ public class Show {
     @SerializedName("genres")
     private ArrayList<String> genres;
 
-    @SerializedName("image[original]")
-    private String imageURL;
+    @SerializedName("image")
+    private Image imageURL;
+    // inspired by
+    // https://stackoverflow.com/questions/42433276/how-to-parse-json-object-with-gson-based-on-dynamic-serializedname-in-android
 
-    public Show(int id, String name, ArrayList<String> genres, String imageURL) {
+    public Show(int id, String name, ArrayList<String> genres, Image imageURL) {
         this.id = id;
         this.name = name;
         this.genres = genres;
@@ -48,11 +50,11 @@ public class Show {
         this.genres = genres;
     }
 
-    public String getImageURL() {
+    public Image getImages() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImages(Image imageURL) {
         this.imageURL = imageURL;
     }
 }

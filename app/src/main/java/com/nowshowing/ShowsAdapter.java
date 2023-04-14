@@ -1,6 +1,7 @@
 package com.nowshowing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,13 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         String genreList = String.join("|", genres);
         holder.show_genres.setText(genreList);
 
-        // TODO download image from internet https://www.tutorialspoint.com/how-do-i-load-an-imageview-by-url-on-android
-        holder.show_image.setImageResource(R.drawable.ic_profile_black);
+        // load image from URL
+        Picasso.get()
+                .load(show.getImages().getImg())
+                .error(R.mipmap.ic_launcher)
+                .resize(400,400)
+                .centerCrop()
+                .into(holder.show_image);
     }
 
     @Override
@@ -58,6 +64,15 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
             show_name = showView.findViewById(R.id.show_name);
             show_genres = showView.findViewById(R.id.genres);
             show_image = showView.findViewById(R.id.show_image);
+
+            // set on-click listener for every list item
+            showView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
+//                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }
