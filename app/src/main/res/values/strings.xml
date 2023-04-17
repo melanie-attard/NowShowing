@@ -16,4 +16,6 @@
     <string name="show_img_description">TV Show Image</string>
     <string name="back_btn_description">Navigate back to previous page</string>
 
+    <string name="details_tab1">Description</string>
+    <string name="details_tab2">Episodes</string>
 </resources>
