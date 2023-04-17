@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".detailsFragments.DescriptionFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello description"
-        android:gravity="top"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/show_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_favourite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_favourite" />
+
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintTop_toBottomOf="@id/show_title"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:text="@string/status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genres" />
+
+        <TextView
+            android:id="@+id/status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/status_title"
+            app:layout_constraintTop_toTopOf="@+id/status_title"
+            app:layout_constraintStart_toEndOf="@id/status_title"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:text="@string/rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_title" />
+
+        <TextView
+            android:id="@+id/rating_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_title"
+            app:layout_constraintTop_toTopOf="@+id/rating_title"
+            app:layout_constraintStart_toStartOf="@id/status_value" />
+
+        <Button
+            android:id="@+id/btn_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="10dp"
+            android:elevation="3dp"
+            android:text="@string/favourite_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

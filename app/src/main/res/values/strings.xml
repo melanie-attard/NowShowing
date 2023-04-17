@@ -18,4 +18,8 @@
 
     <string name="details_tab1">Description</string>
     <string name="details_tab2">Episodes</string>
+
+    <string name="status">Status:</string>
+    <string name="rating">Rating:</string>
+    <string name="favourite_btn">Add to Favourites</string>
 </resources>
