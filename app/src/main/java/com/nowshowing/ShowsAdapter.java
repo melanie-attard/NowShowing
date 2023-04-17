@@ -35,6 +35,9 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         Show show = shows.get(position);
         holder.show_name.setText(show.getName());
 
+        // keep track of Id
+        holder.show_id = show.getId();
+
         // join all genres into one string separated by |
         ArrayList<String> genres = show.getGenres();
         String genreList = String.join("|", genres);
@@ -58,6 +61,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         TextView show_name;
         TextView show_genres;
         ImageView show_image;
+        int show_id;
 
         public ViewHolder(final View showView){
             super(showView);
@@ -65,12 +69,13 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
             show_genres = showView.findViewById(R.id.genres);
             show_image = showView.findViewById(R.id.show_image);
 
-            // set on-click listener for every list item
+            // setting an on-click listener for every list item
             showView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
-//                    view.getContext().startActivity(intent);
+                    Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
+                    intent.putExtra("Id", show_id);
+                    view.getContext().startActivity(intent);
                 }
             });
         }
