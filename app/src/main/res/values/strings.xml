@@ -14,6 +14,6 @@
 
     <string name="search_hint">Search for a show</string>
     <string name="show_img_description">TV Show Image</string>
-    <string name="back_btn_description">Navigate back to home page</string>
+    <string name="back_btn_description">Navigate back to previous page</string>
 
 </resources>
