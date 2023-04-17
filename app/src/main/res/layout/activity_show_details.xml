@@ -14,4 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:onClick="on_backBtnClicked"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_button_round_corners"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        android:contentDescription="@string/back_btn_description"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

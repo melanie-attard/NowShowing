@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class ShowDetailsActivity extends AppCompatActivity {
@@ -19,5 +20,9 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         TextView txt = (TextView) findViewById(R.id.txt_hello);
         txt.setText("Selected: " + Id);
+    }
+
+    public void on_backBtnClicked(View view) {
+        onBackPressed();
     }
 }
