@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.nowshowing.Show;
+import com.nowshowing.detailsFragments.DetailedShow;
 
 import java.util.List;
 
@@ -53,5 +54,25 @@ public class RestRepository {
             }
         });
         return users;
+    }
+
+    public LiveData<DetailedShow> fetchShowDetails(int Id){
+        final MutableLiveData<DetailedShow> show = new MutableLiveData<>();
+
+        api.getShowDetails(Id).enqueue(new Callback<DetailedShow>() {
+            @Override
+            public void onResponse(Call<DetailedShow> call, Response<DetailedShow> response) {
+                if (!response.isSuccessful()) { return; }
+                show.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DetailedShow> call, Throwable t) {
+                Log.i("fetchShowDetails", call.request().toString());
+                Log.e("fetchShowDetails", t.getMessage());
+                show.setValue(null);
+            }
+        });
+        return show;
     }
 }

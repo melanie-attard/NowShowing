@@ -19,6 +19,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private VPAdapter adapter;
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +55,8 @@ public class ShowDetailsActivity extends AppCompatActivity {
             }
         });
 
-        // get Id from intent
-        Intent intent = getIntent();
-        int Id = intent.getIntExtra("Id", 0);
+        // get intent
+        intent = getIntent();
 
         // get image from intent
         ImageView imageView = findViewById(R.id.imageView);
@@ -69,5 +69,10 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
     public void on_backBtnClicked(View view) {
         onBackPressed();
+    }
+
+    public int getShowId(){
+        // allows the fragments to access the show's id
+        return intent.getIntExtra("Id", 0);
     }
 }
