@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowshowing.R;
 import com.nowshowing.ShowDetailsActivity;
@@ -23,7 +25,7 @@ public class DescriptionFragment extends Fragment {
     private TextView rating;
     private TextView description;
     private int show_id;
-    private DetailedShow show;
+    private Button fav;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_description, container, false);
@@ -35,8 +37,18 @@ public class DescriptionFragment extends Fragment {
         status = view.findViewById(R.id.status_value);
         rating = view.findViewById(R.id.rating_value);
         description = view.findViewById(R.id.description);
+        fav = view.findViewById(R.id.btn_favourite);
 
+        // make get request and populate the layout
         fetchDetails();
+
+        // set on click listener for favourites button
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(parent, "Please log in to add a show to favourites", Toast.LENGTH_LONG).show();
+            }
+        });
         return view;
     }
 
@@ -45,8 +57,7 @@ public class DescriptionFragment extends Fragment {
     }
 
     private void updateDetails(DetailedShow updated){
-        show = updated;
-        populateLayout(show); // update the UI
+        populateLayout(updated); // update the UI
     }
 
     private void populateLayout(@NonNull DetailedShow show){
