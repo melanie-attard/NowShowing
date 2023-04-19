@@ -63,6 +63,10 @@ public class RestRepository {
             @Override
             public void onResponse(Call<DetailedShow> call, Response<DetailedShow> response) {
                 if (!response.isSuccessful()) { return; }
+
+                // removing html tags from the show description before returning the show
+                // adapted from https://www.w3docs.com/snippets/java/remove-html-tags-from-a-string.html
+                response.body().setDescription(response.body().getDescription().replaceAll("<[^>]+>", ""));
                 show.setValue(response.body());
             }
 
