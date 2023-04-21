@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nowshowing.models.Show;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View postView = inflater.inflate(R.layout.layout_show_horizontal, parent, false);
-        return new ViewHolder(postView);
+        View showView = inflater.inflate(R.layout.layout_show_horizontal, parent, false);
+        return new ViewHolder(showView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // populate the layout of each show
         Show show = shows.get(position);
         holder.show_name.setText(show.getName());
 

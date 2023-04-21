@@ -6,9 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.nowshowing.Show;
-import com.nowshowing.detailsFragments.DetailedShow;
-import com.nowshowing.detailsFragments.Episode;
+import com.nowshowing.models.Season;
+import com.nowshowing.models.Show;
+import com.nowshowing.models.DetailedShow;
+import com.nowshowing.models.Episode;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
 public class RestRepository {
     private static RestRepository instance = null;
@@ -62,7 +64,7 @@ public class RestRepository {
 
         api.getShowDetails(Id).enqueue(new Callback<DetailedShow>() {
             @Override
-            public void onResponse(Call<DetailedShow> call, Response<DetailedShow> response) {
+            public void onResponse(@NonNull Call<DetailedShow> call, @NonNull Response<DetailedShow> response) {
                 if (!response.isSuccessful()) { return; }
 
                 // removing html tags from the show description before returning the show
@@ -72,7 +74,7 @@ public class RestRepository {
             }
 
             @Override
-            public void onFailure(Call<DetailedShow> call, Throwable t) {
+            public void onFailure(@NonNull Call<DetailedShow> call, @NonNull Throwable t) {
                 Log.i("fetchShowDetails", call.request().toString());
                 Log.e("fetchShowDetails", t.getMessage());
                 show.setValue(null);
@@ -86,17 +88,38 @@ public class RestRepository {
 
         api.getEpisode(showId, season, epNum).enqueue(new Callback<Episode>() {
             @Override
-            public void onResponse(Call<Episode> call, Response<Episode> response) {
+            public void onResponse(@NonNull Call<Episode> call, @NonNull Response<Episode> response) {
+                if (!response.isSuccessful()) { return; }
                 episode.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Episode> call, Throwable t) {
+            public void onFailure(@NonNull Call<Episode> call, @NonNull Throwable t) {
                 Log.i("fetchEpisode", call.request().toString());
                 Log.e("fetchEpisode", t.getMessage());
                 episode.setValue(null);
             }
         });
         return episode;
+    }
+
+    public LiveData<List<Season>> fetchSeasons(int Id){
+        final MutableLiveData<List<Season>> seasons = new MutableLiveData<>();
+
+        api.getSeasons(Id).enqueue(new Callback<List<Season>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Season>> call, @NonNull Response<List<Season>> response) {
+                if (!response.isSuccessful()) { return; }
+                seasons.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Season>> call, @NonNull Throwable t) {
+                Log.i("fetchSeasons", call.request().toString());
+                Log.e("fetchSeasons", t.getMessage());
+                seasons.setValue(null);
+            }
+        });
+        return seasons;
     }
 }

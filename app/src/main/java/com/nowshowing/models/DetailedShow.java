@@ -1,7 +1,6 @@
-package com.nowshowing.detailsFragments;
+package com.nowshowing.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.nowshowing.Image;
 
 import java.util.ArrayList;
 

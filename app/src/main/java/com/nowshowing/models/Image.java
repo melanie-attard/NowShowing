@@ -1,4 +1,4 @@
-package com.nowshowing;
+package com.nowshowing.models;
 
 import com.google.gson.annotations.SerializedName;
 

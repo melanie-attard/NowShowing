@@ -25,4 +25,7 @@
 
     <string name="next_episode">Next to Watch:</string>
     <string name="ep_img_description">Episode Image</string>
+
+    <string name="season_title">Season</string>
+    <string name="ep_count">episodes</string>
 </resources>

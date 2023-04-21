@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowshowing.R;
-import com.nowshowing.Show;
+import com.nowshowing.models.Show;
 import com.nowshowing.ShowsAdapter;
 import com.nowshowing.api.RestRepository;
 import com.nowshowing.databinding.FragmentHomeBinding;

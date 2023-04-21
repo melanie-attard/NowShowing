@@ -1,8 +1,9 @@
 package com.nowshowing.api;
 
-import com.nowshowing.Show;
-import com.nowshowing.detailsFragments.DetailedShow;
-import com.nowshowing.detailsFragments.Episode;
+import com.nowshowing.models.Season;
+import com.nowshowing.models.Show;
+import com.nowshowing.models.DetailedShow;
+import com.nowshowing.models.Episode;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface API {
 
     @GET("shows/{id}/episodebynumber")
     Call<Episode> getEpisode(@Path("id") int ShowId, @Query("season") int Season, @Query("number") int Number);
+
+    @GET("shows/{id}/seasons")
+    Call<List<Season>> getSeasons(@Path("id") int Id);
 
     // try @GET("shows/{id}/episodes") for list of episodes
 }

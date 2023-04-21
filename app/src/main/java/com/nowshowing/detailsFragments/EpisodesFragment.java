@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +16,23 @@ import android.widget.TextView;
 import com.nowshowing.R;
 import com.nowshowing.ShowDetailsActivity;
 import com.nowshowing.api.RestRepository;
+import com.nowshowing.models.Episode;
+import com.nowshowing.models.Season;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EpisodesFragment extends Fragment {
     private int show_id;
-    ImageView image;
-    TextView season_and_ep;
-    TextView title;
-    TextView date;
+    private ImageView image;
+    private TextView season_and_ep;
+    private TextView title;
+    private TextView date;
+    private SeasonsAdapter adapter;
+    private RecyclerView recyclerView;
+    private List<Season> seasons = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_episodes, container, false);
@@ -36,8 +45,17 @@ public class EpisodesFragment extends Fragment {
         title = view.findViewById(R.id.ep_title);
         date = view.findViewById(R.id.ep_release_date);
 
+        // set up the recycler view adapter and layout manager
+        recyclerView = view.findViewById(R.id.seasons_list);
+        adapter = new SeasonsAdapter(seasons);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
         // make get request and populate the layout
         fetchEpisode();
+
+        // get list of seasons
+        fetchSeasons();
 
         //TODO handle checked checkbox
         return view;
@@ -70,5 +88,14 @@ public class EpisodesFragment extends Fragment {
         // format the date
         SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
         date.setText(ft.format(episode.getDate()));
+    }
+
+    private void fetchSeasons(){
+        RestRepository.getInstance().fetchSeasons(show_id).observe(getViewLifecycleOwner(), this::updateSeasonsList);
+    }
+
+    private void updateSeasonsList(List<Season> updatedList){
+        seasons.addAll(updatedList);
+        adapter.notifyDataSetChanged();
     }
 }

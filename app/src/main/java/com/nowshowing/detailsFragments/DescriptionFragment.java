@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.nowshowing.R;
 import com.nowshowing.ShowDetailsActivity;
 import com.nowshowing.api.RestRepository;
+import com.nowshowing.models.DetailedShow;
 
 import java.util.ArrayList;
 
