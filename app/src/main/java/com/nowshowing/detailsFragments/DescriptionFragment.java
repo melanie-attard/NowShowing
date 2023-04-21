@@ -25,10 +25,11 @@ public class DescriptionFragment extends Fragment {
     private TextView rating;
     private TextView description;
     private int show_id;
-    private Button fav;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_description, container, false);
+        // get show id from parent activity
         ShowDetailsActivity parent = (ShowDetailsActivity) getActivity();
         show_id = parent.getShowId();
 
@@ -37,7 +38,7 @@ public class DescriptionFragment extends Fragment {
         status = view.findViewById(R.id.status_value);
         rating = view.findViewById(R.id.rating_value);
         description = view.findViewById(R.id.description);
-        fav = view.findViewById(R.id.btn_favourite);
+        Button fav = view.findViewById(R.id.btn_favourite);
 
         // make get request and populate the layout
         fetchDetails();

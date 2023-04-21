@@ -42,7 +42,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
 
         // load image from URL
         Picasso.get()
-                .load(show.getImages().getImg())
+                .load(show.getImages().getImgUrl())
                 .error(R.mipmap.ic_launcher)
                 .resize(400,400)
                 .centerCrop()
@@ -71,7 +71,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
                 public void onClick(View view) {
                     int pos = getAdapterPosition(); // get position of item
                     int id = shows.get(pos).getId();
-                    String imgUrl = shows.get(pos).getImages().getImg();
+                    String imgUrl = shows.get(pos).getImages().getImgUrl();
 
                     Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
                     intent.putExtra("Id", id);

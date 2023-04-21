@@ -22,4 +22,7 @@
     <string name="status">Status:</string>
     <string name="rating">Rating:</string>
     <string name="favourite_btn">Add to Favourites</string>
+
+    <string name="next_episode">Next to Watch:</string>
+    <string name="ep_img_description">Episode Image</string>
 </resources>

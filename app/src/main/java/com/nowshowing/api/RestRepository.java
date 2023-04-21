@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.nowshowing.Show;
 import com.nowshowing.detailsFragments.DetailedShow;
+import com.nowshowing.detailsFragments.Episode;
 
 import java.util.List;
 
@@ -78,5 +79,24 @@ public class RestRepository {
             }
         });
         return show;
+    }
+
+    public LiveData<Episode> fetchEpisodes(int showId, int season, int epNum){
+        final MutableLiveData<Episode> episode = new MutableLiveData<>();
+
+        api.getEpisode(showId, season, epNum).enqueue(new Callback<Episode>() {
+            @Override
+            public void onResponse(Call<Episode> call, Response<Episode> response) {
+                episode.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Episode> call, Throwable t) {
+                Log.i("fetchEpisode", call.request().toString());
+                Log.e("fetchEpisode", t.getMessage());
+                episode.setValue(null);
+            }
+        });
+        return episode;
     }
 }

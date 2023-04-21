@@ -10,11 +10,11 @@ public class Image {
         this.img = img;
     }
 
-    public String getImg() {
+    public String getImgUrl() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImgUrl(String img) {
         this.img = img;
     }
 }
