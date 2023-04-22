@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowshowing.R;
 import com.nowshowing.ShowDetailsActivity;
@@ -30,6 +33,7 @@ public class EpisodesFragment extends Fragment {
     private TextView season_and_ep;
     private TextView title;
     private TextView date;
+    private CheckBox checkbox;
     private SeasonsAdapter adapter;
     private RecyclerView recyclerView;
     private List<Season> seasons = new ArrayList<>();
@@ -44,6 +48,7 @@ public class EpisodesFragment extends Fragment {
         season_and_ep = view.findViewById(R.id.season_ep_number);
         title = view.findViewById(R.id.ep_title);
         date = view.findViewById(R.id.ep_release_date);
+        checkbox = view.findViewById(R.id.set_watched);
 
         // set up the recycler view adapter and layout manager
         recyclerView = view.findViewById(R.id.seasons_list);
@@ -57,7 +62,24 @@ public class EpisodesFragment extends Fragment {
         // get list of seasons
         fetchSeasons();
 
-        //TODO handle checked checkbox
+        // handle checked/unchecked checkbox
+        // inspired by https://stackoverflow.com/questions/8386832/android-checkbox-listener
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    // if the user is not logged in, automatically uncheck
+                    Toast.makeText(parent, "Please log in to set episode as watched", Toast.LENGTH_LONG).show();
+                    checkbox.setChecked(false);
+                }
+                else
+                {
+                    // unchecked
+                    Toast.makeText(parent, "Episode removed from watched list", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         return view;
     }
 
