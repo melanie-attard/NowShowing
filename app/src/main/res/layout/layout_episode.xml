@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
+    android:clickable="false"
     app:strokeColor="@color/md_theme_light_onBackground"
     app:strokeWidth="1dp"
     style="?attr/materialCardViewElevatedStyle">
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
+            android:maxLength="30"
             app:layout_constraintStart_toEndOf="@id/ep_image"
             app:layout_constraintTop_toBottomOf="@id/season_ep_number" />
 

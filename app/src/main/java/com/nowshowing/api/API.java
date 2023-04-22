@@ -26,5 +26,6 @@ public interface API {
     @GET("shows/{id}/seasons")
     Call<List<Season>> getSeasons(@Path("id") int Id);
 
-    // try @GET("shows/{id}/episodes") for list of episodes
+    @GET("seasons/{id}/episodes") // get list of episodes by season
+    Call<List<Episode>> getEpisodesBySeason(@Path("id") int Id);
 }

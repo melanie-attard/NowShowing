@@ -68,18 +68,15 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
             show_image = showView.findViewById(R.id.show_image);
 
             // setting an on-click listener for every list item
-            showView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int pos = getAdapterPosition(); // get position of item
-                    int id = shows.get(pos).getId();
-                    String imgUrl = shows.get(pos).getImages().getImgUrl();
+            showView.setOnClickListener(view -> {
+                int pos = getAdapterPosition(); // get position of item
+                int id = shows.get(pos).getId();
+                String imgUrl = shows.get(pos).getImages().getImgUrl();
 
-                    Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
-                    intent.putExtra("Id", id);
-                    intent.putExtra("Image", imgUrl);
-                    view.getContext().startActivity(intent);
-                }
+                Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
+                intent.putExtra("Id", id);
+                intent.putExtra("Image", imgUrl);
+                view.getContext().startActivity(intent);
             });
         }
     }

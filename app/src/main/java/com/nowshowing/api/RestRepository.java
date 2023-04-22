@@ -18,7 +18,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
 public class RestRepository {
     private static RestRepository instance = null;
@@ -121,5 +120,25 @@ public class RestRepository {
             }
         });
         return seasons;
+    }
+
+    public LiveData<List<Episode>> getEpisodesBySeason(int Id){
+        final MutableLiveData<List<Episode>> episodes = new MutableLiveData<>();
+
+        api.getEpisodesBySeason(Id).enqueue(new Callback<List<Episode>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Episode>> call, @NonNull Response<List<Episode>> response) {
+                if (!response.isSuccessful()) { return; }
+                episodes.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Episode>> call, Throwable t) {
+                Log.i("fetchEpisodeList", call.request().toString());
+                Log.e("fetchEpisodeList", t.getMessage());
+                episodes.setValue(null);
+            }
+        });
+        return episodes;
     }
 }

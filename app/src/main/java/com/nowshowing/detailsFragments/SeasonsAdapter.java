@@ -1,6 +1,7 @@
 package com.nowshowing.detailsFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nowshowing.EpisodesListActivity;
 import com.nowshowing.R;
+import com.nowshowing.ShowDetailsActivity;
 import com.nowshowing.ShowsAdapter;
 import com.nowshowing.models.Season;
 
@@ -30,7 +33,7 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // populate the layout of each season
+        // bind the data to the layout of each season
         Season s = seasons.get(position);
         holder.season_num.setText(Integer.toString(s.getNum()));
         holder.ep_count.setText(Integer.toString(s.getEpCount()));
@@ -49,11 +52,14 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.ViewHold
             ep_count = seasonView.findViewById(R.id.ep_count);
 
             // setting an on-click listener for every list item
-            seasonView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            seasonView.setOnClickListener(view -> {
+                int pos = getAdapterPosition(); // get position of item
+                int id = seasons.get(pos).getSeasonId();
 
-                }
+                Intent intent = new Intent(view.getContext(), EpisodesListActivity.class);
+                intent.putExtra("Id", id);
+                intent.putExtra("SeasonNum", season_num.getText());
+                view.getContext().startActivity(intent);
             });
         }
     }
