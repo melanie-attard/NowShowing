@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface API {
     String BASE_URL = "https://api.tvmaze.com/";
-    @GET("shows?page=1") // retrieves a list of 250 shows
+    @GET("shows?page=2") // retrieves a list of 250 shows
     Call<List<Show>> getShows();
 
     @GET("shows/{id}")

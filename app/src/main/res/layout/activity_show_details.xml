@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ShowDetailsActivity">
 
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="3dp"
-        android:onClick="on_backBtnClicked"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/custom_button_round_corners"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back_arrow"
-        android:contentDescription="@string/back_btn_description"/>
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -30,6 +16,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:alpha="0.9"
         android:contentDescription="@string/show_img_description"/>
+
+    <include layout="@layout/layout_back_button" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
