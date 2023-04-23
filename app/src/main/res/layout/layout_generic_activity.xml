@@ -11,26 +11,25 @@
         layout="@layout/layout_back_button" />
 
     <TextView
-        android:id="@+id/season_tag"
+        android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
-        android:text="@string/season_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/btn_back"
         app:layout_constraintStart_toEndOf="@id/btn_back"
         app:layout_constraintTop_toTopOf="@id/btn_back" />
 
     <TextView
-        android:id="@+id/snum"
+        android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/season_tag"
-        app:layout_constraintStart_toEndOf="@+id/season_tag"
-        app:layout_constraintTop_toTopOf="@+id/season_tag" />
+        app:layout_constraintBottom_toBottomOf="@+id/title1"
+        app:layout_constraintStart_toEndOf="@+id/title1"
+        app:layout_constraintTop_toTopOf="@+id/title1" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
@@ -43,10 +42,9 @@
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ep_list"
+        android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -16,7 +16,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         query = intent.getStringExtra("query");
-        // TODO remove search bar in home fragment
+
         TextView query = findViewById(R.id.textView);
         query.setText(intent.getStringExtra("query"));
     }

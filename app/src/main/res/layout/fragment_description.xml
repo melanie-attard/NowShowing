@@ -17,9 +17,8 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_favourite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_favourite" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/genres"
@@ -74,14 +73,14 @@
             android:elevation="3dp"
             android:text="@string/favourite_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/status_value" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="4dp"
-            android:paddingVertical="6dp"
+            android:paddingVertical="15dp"
             android:justificationMode="inter_word"
             app:layout_constraintTop_toBottomOf="@id/rating_title"
             app:layout_constraintStart_toStartOf="parent"

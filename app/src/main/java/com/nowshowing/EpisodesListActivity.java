@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.nowshowing.api.RestRepository;
 import com.nowshowing.models.Episode;
-import com.nowshowing.models.Show;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,21 +18,26 @@ import java.util.List;
 public class EpisodesListActivity extends AppCompatActivity {
     private Intent intent;
     private List<Episode> episodes = new ArrayList<>();
+    TextView header;
     TextView season_num;
     RecyclerView recyclerView;
     EpisodesAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_episodes_list);
+        setContentView(R.layout.layout_generic_activity);
+
+        // set header to 'Season'
+        header = findViewById(R.id.title1);
+        header.setText(R.string.season_title);
 
         // get values in intent
         intent = getIntent();
         int seasonId = intent.getIntExtra("Id", 0);
-        season_num = findViewById(R.id.snum);
+        season_num = findViewById(R.id.title2);
         season_num.setText(intent.getStringExtra("SeasonNum"));
 
-        recyclerView = findViewById(R.id.ep_list);
+        recyclerView = findViewById(R.id.recycler_view);
         adapter = new EpisodesAdapter(episodes);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
