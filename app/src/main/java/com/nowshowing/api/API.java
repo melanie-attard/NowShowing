@@ -1,5 +1,6 @@
 package com.nowshowing.api;
 
+import com.nowshowing.models.SearchResult;
 import com.nowshowing.models.Season;
 import com.nowshowing.models.Show;
 import com.nowshowing.models.DetailedShow;
@@ -23,9 +24,12 @@ public interface API {
     @GET("shows/{id}/episodebynumber")
     Call<Episode> getEpisode(@Path("id") int ShowId, @Query("season") int Season, @Query("number") int Number);
 
-    @GET("shows/{id}/seasons")
+    @GET("shows/{id}/seasons") // get all seasons of a show
     Call<List<Season>> getSeasons(@Path("id") int Id);
 
     @GET("seasons/{id}/episodes") // get list of episodes by season
     Call<List<Episode>> getEpisodesBySeason(@Path("id") int Id);
+
+    @GET("search/shows")
+    Call<List<SearchResult>> getSearchResults(@Query("q") String query);
 }

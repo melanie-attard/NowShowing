@@ -29,7 +29,7 @@ public class EpisodesListActivity extends AppCompatActivity {
 
         // set header to 'Season'
         header = findViewById(R.id.title1);
-        header.setText(R.string.season_title);
+        header.setText(R.string.season_header);
 
         // get values in intent
         intent = getIntent();

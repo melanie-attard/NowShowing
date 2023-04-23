@@ -35,11 +35,18 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // bind the data to the layout
         Episode episode = episodes.get(position);
-        Picasso.get()
-                .load(episode.getImage().getImgUrl())
-                .resize(300, 250)
-                .error(R.mipmap.ic_launcher)
-                .into(holder.image);
+
+        if(episode.getImage() == null){
+            // if there is no image for a show, default to the launcher icon
+            holder.image.setImageResource(R.mipmap.ic_launcher);
+        }
+        else {
+            Picasso.get()
+                    .load(episode.getImage().getImgUrl())
+                    .resize(300, 250)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.image);
+        }
 
         // join season and episode number into a single string
         int s = episode.getSeason();

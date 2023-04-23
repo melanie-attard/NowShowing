@@ -43,12 +43,18 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         holder.show_genres.setText(genreList);
 
         // load image from URL
-        Picasso.get()
-                .load(show.getImages().getImgUrl())
-                .error(R.mipmap.ic_launcher)
-                .resize(400,400)
-                .centerCrop()
-                .into(holder.show_image);
+        if(show.getImages() == null){
+            // if there is no image for a show, default to the launcher icon
+            holder.show_image.setImageResource(R.mipmap.ic_launcher);
+        }
+        else {
+            Picasso.get()
+                    .load(show.getImages().getImgUrl())
+                    .error(R.mipmap.ic_launcher)
+                    .resize(400, 400)
+                    .centerCrop()
+                    .into(holder.show_image);
+        }
     }
 
     @Override
@@ -71,7 +77,15 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
             showView.setOnClickListener(view -> {
                 int pos = getAdapterPosition(); // get position of item
                 int id = shows.get(pos).getId();
-                String imgUrl = shows.get(pos).getImages().getImgUrl();
+
+                // check if image is null before sending to intent
+                String imgUrl;
+                if(shows.get(pos).getImages() == null){
+                    imgUrl = "null";
+                }
+                else {
+                    imgUrl = shows.get(pos).getImages().getImgUrl();
+                }
 
                 Intent intent = new Intent(view.getContext(), ShowDetailsActivity.class);
                 intent.putExtra("Id", id);

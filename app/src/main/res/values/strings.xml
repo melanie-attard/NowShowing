@@ -27,7 +27,8 @@
     <string name="ep_img_description">Episode Image</string>
     <string name="checkbox_description">Set episode as watched</string>
 
-    <string name="season_title">Season</string>
+    <string name="season_header">Season</string>
     <string name="ep_count">episodes</string>
 
+    <string name="search_result_header">Results for</string>
 </resources>

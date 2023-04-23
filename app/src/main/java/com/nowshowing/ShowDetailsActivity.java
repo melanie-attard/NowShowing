@@ -61,10 +61,17 @@ public class ShowDetailsActivity extends AppCompatActivity {
         // get image from intent
         ImageView imageView = findViewById(R.id.imageView);
         String image = String.valueOf(intent.getStringExtra("Image"));
-        Picasso.get()
-                .load(image)
-                .error(R.mipmap.ic_launcher)
-                .into(imageView);
+
+        if(image == "null"){
+            // if there is no image for a show, default to the launcher icon
+            imageView.setImageResource(R.mipmap.ic_launcher);
+        }
+        else {
+            Picasso.get()
+                    .load(image)
+                    .error(R.mipmap.ic_launcher)
+                    .into(imageView);
+        }
     }
 
     public void on_backBtnClicked(View view) {

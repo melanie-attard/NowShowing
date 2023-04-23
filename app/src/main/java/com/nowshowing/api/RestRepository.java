@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.nowshowing.models.SearchResult;
 import com.nowshowing.models.Season;
 import com.nowshowing.models.Show;
 import com.nowshowing.models.DetailedShow;
 import com.nowshowing.models.Episode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -140,5 +142,30 @@ public class RestRepository {
             }
         });
         return episodes;
+    }
+
+    public LiveData<List<Show>> getSearchResults(String query){
+        final MutableLiveData<List<Show>> results = new MutableLiveData<>();
+
+        api.getSearchResults(query).enqueue(new Callback<List<SearchResult>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<SearchResult>> call, @NonNull Response<List<SearchResult>> response) {
+                if (!response.isSuccessful()) { return; }
+                // convert into List<Show>
+                List<Show> list = new ArrayList<>();
+                for (SearchResult result: response.body()) {
+                    list.add(result.getShow());
+                }
+                results.setValue(list);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<SearchResult>> call, @NonNull Throwable t) {
+                Log.i("fetchSearchResults", call.request().toString());
+                Log.e("fetchSearchResults", t.getMessage());
+                results.setValue(null);
+            }
+        });
+        return results;
     }
 }

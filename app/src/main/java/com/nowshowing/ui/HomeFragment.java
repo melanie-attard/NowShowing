@@ -1,4 +1,4 @@
-package com.nowshowing.ui.home;
+package com.nowshowing.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
