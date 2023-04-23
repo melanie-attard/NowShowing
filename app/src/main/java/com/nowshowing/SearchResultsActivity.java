@@ -44,10 +44,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
-        Search(query);
+        Search();
     }
 
-    private void Search(String query){
+    private void Search(){
         RestRepository.getInstance().getSearchResults(query).observe(this, this::updateResults);
     }
 

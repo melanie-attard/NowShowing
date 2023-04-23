@@ -9,7 +9,7 @@
 
     <string name="menu_item1">Home</string>
     <string name="menu_item2">Favourites</string>
-    <string name="menu_item3">Profile</string>
+    <string name="menu_item3">Account</string>
     <string name="menu_btn">Log Out</string>
 
     <string name="search_view">Search</string>
@@ -31,4 +31,7 @@
     <string name="ep_count">episodes</string>
 
     <string name="search_result_header">Results for</string>
+
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Register</string>
 </resources>
