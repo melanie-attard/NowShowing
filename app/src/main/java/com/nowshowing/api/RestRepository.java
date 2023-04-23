@@ -133,7 +133,7 @@ public class RestRepository {
             }
 
             @Override
-            public void onFailure(Call<List<Episode>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Episode>> call, @NonNull Throwable t) {
                 Log.i("fetchEpisodeList", call.request().toString());
                 Log.e("fetchEpisodeList", t.getMessage());
                 episodes.setValue(null);

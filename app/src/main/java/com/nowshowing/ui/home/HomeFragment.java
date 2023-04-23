@@ -2,6 +2,7 @@ package com.nowshowing.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,6 +30,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // this will call onPrepareOptionsMenu
+        setHasOptionsMenu(true);
+
         recyclerView = root.findViewById(R.id.home_list);
         adapter = new ShowsAdapter(shows);
         recyclerView.setAdapter(adapter);
@@ -36,6 +40,14 @@ public class HomeFragment extends Fragment {
 
         fetchShows();
         return root;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // setting the search view item as visible,
+        // retrieved from https://stackoverflow.com/questions/8308695/how-to-add-options-menu-to-fragment-in-android#:~:text=Add%20setHasOptionsMenu(true)%20in%20the,items%20in%20your%20Fragment%20class.&text=You%20don't%20need%20to,onPrepareOptionsMenu%20method%20available%20in%20Fragment.
+        menu.findItem(R.id.search_bar).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
     }
 
     private void fetchShows(){
