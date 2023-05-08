@@ -1,4 +1,4 @@
-package com.nowshowing.ui.gallery;
+package com.nowshowing.mainFragments.gallery;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

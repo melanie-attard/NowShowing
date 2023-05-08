@@ -1,4 +1,4 @@
-package com.nowshowing.ui;
+package com.nowshowing.mainFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
