@@ -32,7 +32,7 @@ public class AccountFragment extends Fragment {
             Intent intent = new Intent(root.getContext(), LoginActivity.class);
             startActivity(intent);
         });
-        
+
         return root;
     }
 

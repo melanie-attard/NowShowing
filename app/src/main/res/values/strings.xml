@@ -35,6 +35,8 @@
     <string name="login_title">Welcome back!</string>
     <string name="username_field">Username</string>
     <string name="password_field">Password</string>
+    <string name="register_prompt">Don\'t have an account?</string>
+    <string name="register_now_btn">Register Now</string>
     <string name="register_btn">Register</string>
 
     <string name="fav_not_logged_in">Login to add shows to Favourites</string>
