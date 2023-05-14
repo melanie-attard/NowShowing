@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.nowshowing.R;
 import com.nowshowing.databinding.FragmentAccountBinding;
 import com.nowshowing.mainFragments.account.LoginActivity;
+import com.nowshowing.mainFragments.account.RegisterActivity;
 
 public class AccountFragment extends Fragment {
 
@@ -30,6 +31,11 @@ public class AccountFragment extends Fragment {
         // set an on-click listener for each button
         login.setOnClickListener(view -> {
             Intent intent = new Intent(root.getContext(), LoginActivity.class);
+            startActivity(intent);
+        });
+
+        register.setOnClickListener(view -> {
+            Intent intent = new Intent(root.getContext(), RegisterActivity.class);
             startActivity(intent);
         });
 
