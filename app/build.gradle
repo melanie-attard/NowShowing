@@ -48,4 +48,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    // sqlite dependencies
+    def sqlite_version = "2.3.0"
+    implementation "androidx.sqlite:sqlite:$sqlite_version"
+    implementation "androidx.sqlite:sqlite-framework:$sqlite_version"
 }
