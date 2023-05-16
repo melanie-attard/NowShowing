@@ -2,8 +2,11 @@ package com.nowshowing.mainFragments.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,10 +19,15 @@ public class LoginActivity extends AppCompatActivity {
     private UserDBHelper DB;
     private TextInputLayout username, password;
     private Button login_btn, register_now_btn;
+    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // get the shared preference file to update the logged in user,
+        // inspired by https://stackoverflow.com/questions/11316560/sharedpreferences-from-different-activity
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         DB = new UserDBHelper(this);
         username = findViewById(R.id.username);
@@ -52,6 +60,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 Boolean exists = DB.userExists(user, pass);
                 if(exists){
+                    // set the user as current user in shared preferences
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(getString(R.string.current_user_key), user);
+                    editor.apply();
+
                     Toast.makeText(this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                     // navigate user back to account fragment
                     onBackPressed();

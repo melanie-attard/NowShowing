@@ -42,6 +42,7 @@
     <string name="register_title">Create an Account to keep track of your shows!</string>
     <string name="email_field">Email</string>
     <string name="confirm_pw">Confirm Password</string>
+    <string name="current_user_key">current_user</string>
 
     <string name="fav_not_logged_in">Login to add shows to Favourites</string>
 </resources>
