@@ -7,12 +7,13 @@
     tools:context=".mainFragments.FavouritesFragment">
 
     <TextView
-        android:id="@+id/text_gallery"
+        android:id="@+id/no_login_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fav_not_logged_in"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
