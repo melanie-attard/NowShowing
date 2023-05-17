@@ -25,7 +25,7 @@ public class UserDBHelper extends DBHelper{
 
     public Boolean checkUsername(String username){
         // checks whether the username exists already, since usernames must be unique
-        SQLiteDatabase db = super.getWritableDatabase();
+        SQLiteDatabase db = super.getReadableDatabase();
         Cursor cursor = db.query(
                 TABLE_NAME,
                 null,
@@ -42,7 +42,7 @@ public class UserDBHelper extends DBHelper{
 
     public Boolean userExists(String username, String password){
         // checks whether the entered credentials match
-        SQLiteDatabase db = super.getWritableDatabase();
+        SQLiteDatabase db = super.getReadableDatabase();
         Cursor cursor = db.query(
                 TABLE_NAME,
                 null,

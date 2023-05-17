@@ -1,10 +1,12 @@
 package com.nowshowing.detailsFragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.nowshowing.R;
 import com.nowshowing.ShowDetailsActivity;
 import com.nowshowing.api.RestRepository;
+import com.nowshowing.backend.FavouritesDBHelper;
 import com.nowshowing.models.DetailedShow;
 
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class DescriptionFragment extends Fragment {
     private TextView rating;
     private TextView description;
     private int show_id;
+    private FavouritesDBHelper DB;
+    SharedPreferences sharedPref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +38,10 @@ public class DescriptionFragment extends Fragment {
         // get show id from parent activity
         ShowDetailsActivity parent = (ShowDetailsActivity) getActivity();
         show_id = parent.getShowId();
+
+        DB = new FavouritesDBHelper(view.getContext());
+        // retrieve shared preferences containing the current user
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(view.getContext().getApplicationContext());
 
         title = view.findViewById(R.id.show_title);
         genres = view.findViewById(R.id.genres);
@@ -45,10 +54,19 @@ public class DescriptionFragment extends Fragment {
         fetchDetails();
 
         // set on click listener for favourites button
-        fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fav.setOnClickListener(view1 -> {
+            // check if the user is logged in
+            String user = sharedPref.getString(getString(R.string.current_user_key), null);
+            if(user == null){
                 Toast.makeText(parent, "Please log in to add a show to favourites", Toast.LENGTH_LONG).show();
+            }
+            else{
+                // add show to favourites
+                Boolean result = DB.insertFavourite(user, show_id);
+                if(result){
+                    // TODO change button text to 'Remove from favourites'
+                    Toast.makeText(parent, "Added to favourites", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
