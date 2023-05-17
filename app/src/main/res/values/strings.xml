@@ -20,7 +20,8 @@
 
     <string name="status">Status:</string>
     <string name="rating">Rating:</string>
-    <string name="favourite_btn">Add to Favourites</string>
+    <string name="add_favourite_btn">Add to Favourites</string>
+    <string name="remove_fav_btn">Remove from Favourites</string>
 
     <string name="next_episode">Next to Watch:</string>
     <string name="ep_img_description">Episode Image</string>
@@ -45,4 +46,6 @@
     <string name="current_user_key">current_user</string>
 
     <string name="fav_not_logged_in">Login to add shows to Favourites</string>
+    <string name="fav_title">Your Favourite Shows</string>
+    <string name="no_favs_message">You do not have any favourites yet!</string>
 </resources>

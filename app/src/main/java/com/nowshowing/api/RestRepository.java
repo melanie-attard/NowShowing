@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
 public class RestRepository {
     private static RestRepository instance = null;
@@ -41,23 +42,43 @@ public class RestRepository {
     }
 
     public LiveData<List<Show>> fetchShows() {
-        final MutableLiveData<List<Show>> users = new MutableLiveData<>();
+        final MutableLiveData<List<Show>> shows = new MutableLiveData<>();
 
         api.getShows().enqueue(new Callback<List<Show>>() {
             @Override
             public void onResponse(@NonNull Call<List<Show>> call, @NonNull Response<List<Show>> response) {
                 if (!response.isSuccessful()) { return; }
-                users.setValue(response.body());
+                shows.setValue(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Show>> call, @NonNull Throwable t) {
                 Log.i("fetchShows", call.request().toString());
                 Log.e("fetchShows", t.getMessage());
-                users.setValue(null);
+                shows.setValue(null);
             }
         });
-        return users;
+        return shows;
+    }
+
+    public LiveData<Show> getShowByID(int Id){
+        final MutableLiveData<Show> show = new MutableLiveData<>();
+
+        api.getShowByID(Id).enqueue(new Callback<Show>() {
+            @Override
+            public void onResponse(@NonNull Call<Show> call, @NonNull Response<Show> response) {
+                if (!response.isSuccessful()) { return; }
+                show.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Show> call, @NonNull Throwable t) {
+                Log.i("fetchShow", call.request().toString());
+                Log.e("fetchShow", t.getMessage());
+                show.setValue(null);
+            }
+        });
+        return show;
     }
 
     public LiveData<DetailedShow> fetchShowDetails(int Id){

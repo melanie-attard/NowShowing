@@ -19,6 +19,9 @@ public interface API {
     Call<List<Show>> getShows();
 
     @GET("shows/{id}")
+    Call<Show> getShowByID(@Path("id") int Id);
+
+    @GET("shows/{id}")
     Call<DetailedShow> getShowDetails(@Path("id") int Id);
 
     @GET("shows/{id}/episodebynumber")

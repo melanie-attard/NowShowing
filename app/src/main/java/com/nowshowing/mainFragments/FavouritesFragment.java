@@ -10,10 +10,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowshowing.R;
+import com.nowshowing.ShowsAdapter;
+import com.nowshowing.api.RestRepository;
 import com.nowshowing.backend.FavouritesDBHelper;
 import com.nowshowing.databinding.FragmentFavouritesBinding;
+import com.nowshowing.models.Show;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +27,10 @@ public class FavouritesFragment extends Fragment {
 
     private FragmentFavouritesBinding binding;
     private FavouritesDBHelper DB;
-    private List<Integer> favs = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private ShowsAdapter adapter;
+    private List<Show> shows = new ArrayList<>();
+    private TextView msg;
     SharedPreferences sharedPref;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +38,7 @@ public class FavouritesFragment extends Fragment {
         View root = binding.getRoot();
 
         DB = new FavouritesDBHelper(root.getContext());
-        TextView msg = root.findViewById(R.id.no_login_msg);
+        msg = root.findViewById(R.id.no_login_msg);
 
         // retrieve shared preferences containing the current user
         sharedPref = PreferenceManager.getDefaultSharedPreferences(root.getContext().getApplicationContext());
@@ -38,14 +46,40 @@ public class FavouritesFragment extends Fragment {
         if(user == null){
             // if the user is not logged in, they cannot view their favourites
             msg.setVisibility(View.VISIBLE);
+            msg.setText(R.string.fav_not_logged_in);
         }
         else{
-            favs = DB.getFavourites(user);
-            msg.setVisibility(View.VISIBLE);
-            msg.setText("You have " + favs.size() + " favourites.");
-        }
+            msg.setVisibility(View.INVISIBLE);
+            // set up recycler view
+            recyclerView = root.findViewById(R.id.favourites_list);
+            adapter = new ShowsAdapter(shows);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
+            // get data
+            fetchFavourites(user);
+        }
         return root;
+    }
+
+    private void fetchFavourites(String username){
+        List<Integer> favs = DB.getFavourites(username);
+        if(favs.size() == 0){
+            // if no shows have been set to favourites yet, output a message
+            msg.setVisibility(View.VISIBLE);
+            msg.setText(R.string.no_favs_message);
+        }
+        else{
+            msg.setVisibility(View.INVISIBLE);
+            for (int show_id: favs) {
+                RestRepository.getInstance().getShowByID(show_id).observe(getViewLifecycleOwner(), this::updateShowsList);
+            }
+        }
+    }
+
+    private void updateShowsList(Show show){
+        shows.add(show);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
