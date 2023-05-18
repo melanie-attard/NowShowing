@@ -29,7 +29,9 @@ public class DescriptionFragment extends Fragment {
     private TextView rating;
     private TextView description;
     private int show_id;
+    private String user;
     private FavouritesDBHelper DB;
+    private Boolean isFav;
     SharedPreferences sharedPref;
 
     @Override
@@ -42,6 +44,7 @@ public class DescriptionFragment extends Fragment {
         DB = new FavouritesDBHelper(view.getContext());
         // retrieve shared preferences containing the current user
         sharedPref = PreferenceManager.getDefaultSharedPreferences(view.getContext().getApplicationContext());
+        user = sharedPref.getString(getString(R.string.current_user_key), null);
 
         title = view.findViewById(R.id.show_title);
         genres = view.findViewById(R.id.genres);
@@ -49,6 +52,17 @@ public class DescriptionFragment extends Fragment {
         rating = view.findViewById(R.id.rating_value);
         description = view.findViewById(R.id.description);
         Button fav = view.findViewById(R.id.btn_favourite);
+
+        if(user != null){
+            // set button text according to whether the show is in favourites
+            isFav = DB.isFavourite(user, show_id);
+            if(isFav){
+                fav.setText(R.string.remove_fav_btn);
+            }
+            else{
+                fav.setText(R.string.add_favourite_btn);
+            }
+        }
 
         // make get request and populate the layout
         fetchDetails();
@@ -61,11 +75,31 @@ public class DescriptionFragment extends Fragment {
                 Toast.makeText(parent, "Please log in to add a show to favourites", Toast.LENGTH_LONG).show();
             }
             else{
-                // add show to favourites
-                Boolean result = DB.insertFavourite(user, show_id);
-                if(result){
-                    // TODO change button text to 'Remove from favourites'
-                    Toast.makeText(parent, "Added to favourites", Toast.LENGTH_SHORT).show();
+                // check whether we are adding or removing
+                isFav = DB.isFavourite(user, show_id);
+                if(isFav){
+                    // remove the row from the database
+                    Boolean result = DB.Delete(user, show_id);
+                    if(result){
+                        // update button text to 'Add to Favourites'
+                        fav.setText(R.string.add_favourite_btn);
+                    }
+                    else{
+                        // an error occurred
+                        Toast.makeText(parent, "Oops, something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    // add show to favourites
+                    Boolean result = DB.insertFavourite(user, show_id);
+                    if(result){
+                        // update button text to 'Remove from Favourites'
+                        fav.setText(R.string.remove_fav_btn);
+                    }
+                    else{
+                        // an error occurred
+                        Toast.makeText(parent, "Oops, something went wrong!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

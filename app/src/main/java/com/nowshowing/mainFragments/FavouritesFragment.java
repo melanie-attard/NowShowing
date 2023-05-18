@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nowshowing.R;
 import com.nowshowing.ShowsAdapter;
@@ -29,6 +30,7 @@ public class FavouritesFragment extends Fragment {
     private FavouritesDBHelper DB;
     private RecyclerView recyclerView;
     private ShowsAdapter adapter;
+    private SwipeRefreshLayout refreshLayout;
     private List<Show> shows = new ArrayList<>();
     private TextView msg;
     SharedPreferences sharedPref;
@@ -39,6 +41,7 @@ public class FavouritesFragment extends Fragment {
 
         DB = new FavouritesDBHelper(root.getContext());
         msg = root.findViewById(R.id.no_login_msg);
+        refreshLayout = root.findViewById(R.id.refreshLayout);
 
         // retrieve shared preferences containing the current user
         sharedPref = PreferenceManager.getDefaultSharedPreferences(root.getContext().getApplicationContext());
@@ -55,6 +58,13 @@ public class FavouritesFragment extends Fragment {
             adapter = new ShowsAdapter(shows);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
+            // SetOnRefreshListener for SwipeRefreshLayout
+            refreshLayout.setOnRefreshListener(() -> {
+                refreshLayout.setRefreshing(false);
+                shows.clear();
+                fetchFavourites(user);
+            });
 
             // get data
             fetchFavourites(user);

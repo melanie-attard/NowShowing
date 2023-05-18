@@ -24,6 +24,14 @@ public class FavouritesDBHelper extends DBHelper{
         return result != -1;
     }
 
+    public Boolean Delete(String username, int show_id){
+        // adapted from https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase#delete(java.lang.String,%20java.lang.String,%20java.lang.String[])
+        SQLiteDatabase db = super.getWritableDatabase();
+        int result = db.delete(TABLE_NAME, "user = ? and show_id = ?", new String[]{username, String.valueOf(show_id)});
+        // at least 1 row must be affected for the deletion to be successful
+        return result > 0;
+    }
+
     public List<Integer> getFavourites(String user){
         ArrayList<Integer> shows = new ArrayList<>();
         // gets the shows corresponding to the given user
@@ -45,5 +53,23 @@ public class FavouritesDBHelper extends DBHelper{
         }
         cursor.close();
         return shows;
+    }
+
+    public Boolean isFavourite(String username, int show_id){
+        // checks whether the given show is already set to favourites
+        SQLiteDatabase db = super.getReadableDatabase();
+        String show = String.valueOf(show_id);
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                null,
+                "user = ? and show_id = ?",
+                new String[] {username, show},
+                null,
+                null,
+                "fav_id ASC"
+        );
+        int count = cursor.getCount();
+        cursor.close(); // free up resources before leaving the method
+        return count > 0;
     }
 }
