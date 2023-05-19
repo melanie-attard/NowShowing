@@ -37,4 +37,31 @@ public class WatchedDBHelper extends DBHelper{
         cursor.close(); // free up resources before leaving the method
         return count > 0;
     }
+
+    public Boolean remove(String username, int ep_id){
+        // remove the row containing the given episode
+        SQLiteDatabase db = super.getWritableDatabase();
+        int result = db.delete(TABLE_NAME, "user = ? and ep_id = ?", new String[]{username, String.valueOf(ep_id)});
+        // at least 1 row must be affected for the deletion to be successful
+        return result > 0;
+    }
+
+    public int getWatchedCount(String username, int show_id){
+        // count how many episodes the user has watched belonging to the given show
+        SQLiteDatabase db = super.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                null,
+                "user = ? and show_id = ?",
+                new String[] {username, String.valueOf(show_id)},
+                null,
+                null,
+                "id ASC"
+        );
+        int count = cursor.getCount();
+        cursor.close(); // free up resources before leaving the method
+        return count;
+    }
+
+
 }

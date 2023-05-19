@@ -29,7 +29,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
     private int show_id;
     private WatchedDBHelper watchedDB;
     private FavouritesDBHelper favDB;
-    String user;
+    private String user;
 
     public EpisodesAdapter(String user, List<Episode> episodes, int show_id){
         this.episodes = episodes;
@@ -99,6 +99,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                             Toast.makeText(holder.checkbox.getContext(), "This show is now in your Favourites", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     // add episode to watchlist
                     Boolean result = watchedDB.insertEpisode(user, show_id, episode.getEpId());
                     if(!result){
@@ -108,7 +109,11 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                 }
                 else{
                     // remove episode from watchlist
-
+                    Boolean result = watchedDB.remove(user, episode.getEpId());
+                    if(!result){
+                        Toast.makeText(holder.checkbox.getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
+                        holder.checkbox.setCheckedState(MaterialCheckBox.STATE_CHECKED);
+                    }
                 }
             }
         });
