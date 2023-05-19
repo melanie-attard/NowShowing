@@ -58,7 +58,7 @@
             app:layout_constraintStart_toStartOf="@id/season_ep_number"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/set_watched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

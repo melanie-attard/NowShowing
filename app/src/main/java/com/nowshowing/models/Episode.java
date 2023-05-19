@@ -6,6 +6,8 @@ import com.nowshowing.models.Image;
 import java.util.Date;
 
 public class Episode {
+    @SerializedName("id")
+    private int epId;
     @SerializedName("name")
     private String title;
 
@@ -21,12 +23,21 @@ public class Episode {
     @SerializedName("image")
     private Image image;
 
-    public Episode(String title, int season, int epNum, Date date, Image image) {
+    public Episode(int id, String title, int season, int epNum, Date date, Image image) {
+        epId = id;
         this.title = title;
         this.season = season;
         this.epNum = epNum;
         this.date = date;
         this.image = image;
+    }
+
+    public int getEpId() {
+        return epId;
+    }
+
+    public void setEpId(int epId) {
+        this.epId = epId;
     }
 
     public String getTitle() {

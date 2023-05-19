@@ -20,7 +20,11 @@ import java.util.List;
 
 public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.ViewHolder>{
     private List<Season> seasons;
-    public SeasonsAdapter(List<Season> seasons){ this.seasons = seasons; }
+    private int show_id;
+    public SeasonsAdapter(List<Season> seasons, int show_id){
+        this.seasons = seasons;
+        this.show_id = show_id;
+    }
 
     @NonNull
     @Override
@@ -59,6 +63,7 @@ public class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.ViewHold
                 Intent intent = new Intent(view.getContext(), EpisodesListActivity.class);
                 intent.putExtra("Id", id);
                 intent.putExtra("SeasonNum", season_num.getText());
+                intent.putExtra("Show_Id", show_id);
                 view.getContext().startActivity(intent);
             });
         }

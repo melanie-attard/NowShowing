@@ -1,16 +1,23 @@
 package com.nowshowing;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
+import com.nowshowing.backend.FavouritesDBHelper;
+import com.nowshowing.backend.WatchedDBHelper;
 import com.nowshowing.models.Episode;
 import com.squareup.picasso.Picasso;
 
@@ -19,8 +26,16 @@ import java.util.List;
 
 public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHolder>{
     private List<Episode> episodes;
+    private int show_id;
+    private WatchedDBHelper watchedDB;
+    private FavouritesDBHelper favDB;
+    String user;
 
-    public EpisodesAdapter(List<Episode> episodes){ this.episodes = episodes; }
+    public EpisodesAdapter(String user, List<Episode> episodes, int show_id){
+        this.episodes = episodes;
+        this.show_id = show_id;
+        this.user = user;
+    }
 
     @NonNull
     @Override
@@ -28,6 +43,8 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View epView = inflater.inflate(R.layout.layout_episode, parent, false);
+        watchedDB = new WatchedDBHelper(parent.getContext());
+        favDB = new FavouritesDBHelper(parent.getContext());
         return new ViewHolder(epView);
     }
 
@@ -59,6 +76,42 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         // format the date
         SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
         holder.date.setText(ft.format(episode.getDate()));
+
+        // if the episode is already set as watched, set the checkbox state to CHECKED
+        if(user != null && watchedDB.isWatched(user, episode.getEpId())){
+            holder.checkbox.setCheckedState(MaterialCheckBox.STATE_CHECKED);
+        }
+
+        // set on click listener for checkbox
+        holder.checkbox.addOnCheckedStateChangedListener((checkBox, state) -> {
+            if(user == null){
+                // user is not logged in and cannot add an episode to their watched list
+                Toast.makeText(holder.checkbox.getContext(),"Please log in to set an episode as watched", Toast.LENGTH_LONG).show();
+                holder.checkbox.setCheckedState(MaterialCheckBox.STATE_UNCHECKED);
+            }
+            else {
+                // check which state the checkbox is in
+                if(state == MaterialCheckBox.STATE_CHECKED){
+                    // if show is not in favourites, automatically add it
+                    if(!favDB.isFavourite(user, show_id)){
+                        Boolean result = favDB.insertFavourite(user, show_id);
+                        if(result){
+                            Toast.makeText(holder.checkbox.getContext(), "This show is now in your Favourites", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    // add episode to watchlist
+                    Boolean result = watchedDB.insertEpisode(user, show_id, episode.getEpId());
+                    if(!result){
+                        Toast.makeText(holder.checkbox.getContext(), "Oops, something went wrong!", Toast.LENGTH_SHORT).show();
+                        holder.checkbox.setCheckedState(MaterialCheckBox.STATE_UNCHECKED);
+                    }
+                }
+                else{
+                    // remove episode from watchlist
+
+                }
+            }
+        });
     }
 
     @Override
@@ -71,7 +124,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         TextView season_and_ep;
         TextView title;
         TextView date;
-        CheckBox checkbox;
+        MaterialCheckBox checkbox;
 
         public ViewHolder(final View epView) {
             super(epView);
@@ -80,8 +133,6 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
             title = epView.findViewById(R.id.ep_title);
             date = epView.findViewById(R.id.ep_release_date);
             checkbox = epView.findViewById(R.id.set_watched);
-
-            //TODO set on click listener for checkbox
         }
     }
 }

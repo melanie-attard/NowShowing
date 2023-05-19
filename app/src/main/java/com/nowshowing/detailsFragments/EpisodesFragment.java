@@ -52,7 +52,7 @@ public class EpisodesFragment extends Fragment {
 
         // set up the recycler view adapter and layout manager
         recyclerView = view.findViewById(R.id.seasons_list);
-        adapter = new SeasonsAdapter(seasons);
+        adapter = new SeasonsAdapter(seasons, show_id);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
@@ -64,19 +64,16 @@ public class EpisodesFragment extends Fragment {
 
         // handle checked/unchecked checkbox
         // inspired by https://stackoverflow.com/questions/8386832/android-checkbox-listener
-        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    // if the user is not logged in, automatically uncheck
-                    Toast.makeText(parent, "Please log in to set episode as watched", Toast.LENGTH_LONG).show();
-                    checkbox.setChecked(false);
-                }
-                else
-                {
-                    // unchecked
-                    Toast.makeText(parent, "Episode removed from watched list", Toast.LENGTH_LONG).show();
-                }
+        checkbox.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                // if the user is not logged in, automatically uncheck
+                Toast.makeText(parent, "Please log in to set episode as watched", Toast.LENGTH_LONG).show();
+                checkbox.setChecked(false);
+            }
+            else
+            {
+                // unchecked
+                Toast.makeText(parent, "Episode removed from watched list", Toast.LENGTH_LONG).show();
             }
         });
 
