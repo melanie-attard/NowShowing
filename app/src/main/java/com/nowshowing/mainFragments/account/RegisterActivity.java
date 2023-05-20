@@ -36,6 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
             String pass = password.getEditText().getText().toString();
             String Email = email.getEditText().getText().toString();
             String confirmpass = repassword.getEditText().getText().toString();
+
+            // reset all error fields
+            username.setError(null);
+            password.setError(null);
+            email.setError(null);
+            repassword.setError(null);
             boolean error = false;
 
             if(user.isEmpty() || pass.isEmpty() || Email.isEmpty() || confirmpass.isEmpty()){
@@ -91,6 +97,27 @@ public class RegisterActivity extends AppCompatActivity {
             }
             else if(user.equals(" ")){
                 username.setError("Username cannot be empty");
+                error = true;
+            }
+
+            // check that all inputs are of the required length
+            if(user.length() > username.getCounterMaxLength()){
+                username.setError("Username cannot be longer than " + username.getCounterMaxLength() + " characters");
+                error = true;
+            }
+
+            if(pass.length() > password.getCounterMaxLength()){
+                password.setError("Password cannot be longer than " + password.getCounterMaxLength() + " characters");
+                error = true;
+            }
+
+            if(Email.length() > email.getCounterMaxLength()){
+                email.setError("Email cannot be longer than " + email.getCounterMaxLength() + " characters");
+                error = true;
+            }
+
+            if(confirmpass.length() > repassword.getCounterMaxLength()){
+                repassword.setError("Password cannot be longer than " + repassword.getCounterMaxLength() + " characters");
                 error = true;
             }
 

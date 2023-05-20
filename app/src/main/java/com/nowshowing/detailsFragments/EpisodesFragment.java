@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,12 +36,14 @@ import java.util.List;
 
 public class EpisodesFragment extends Fragment {
     private int show_id;
-    private ImageView image;
+    private boolean refreshing;
+    private ImageView image, show_completed;
     private TextView season_and_ep;
     private TextView title;
     private TextView date;
     private MaterialCheckBox checkbox;
     private LinearProgressIndicator progressIndicator;
+    private RelativeLayout episodeCard;
     private SeasonsAdapter adapter;
     private RecyclerView recyclerView;
     private List<Season> seasons = new ArrayList<>();
@@ -61,13 +64,16 @@ public class EpisodesFragment extends Fragment {
 
         favDB = new FavouritesDBHelper(view.getContext());
         watchedDB = new WatchedDBHelper(view.getContext());
+        refreshing = false;
 
         image = view.findViewById(R.id.ep_card).findViewById(R.id.ep_image);
+        show_completed = view.findViewById(R.id.show_completed);
         season_and_ep = view.findViewById(R.id.season_ep_number);
         title = view.findViewById(R.id.ep_title);
         date = view.findViewById(R.id.ep_release_date);
         progressIndicator = view.findViewById(R.id.progress_indicator);
         checkbox = view.findViewById(R.id.set_watched);
+        episodeCard = view.findViewById(R.id.card_container);
 
         // set up the recycler view adapter and layout manager
         recyclerView = view.findViewById(R.id.seasons_list);
@@ -87,7 +93,10 @@ public class EpisodesFragment extends Fragment {
     }
 
     private void updateSeasonsList(List<Season> updatedList){
-        seasons.addAll(updatedList);
+        if(!refreshing){
+            seasons.addAll(updatedList);
+        }
+
         // calling fetchEpisode from here to have access to seasons list
         fetchEpisode();
         adapter.notifyDataSetChanged();
@@ -120,8 +129,10 @@ public class EpisodesFragment extends Fragment {
                 }
 
                 if(!found){
-                    // TODO the user has watched all the available episodes,
-                    // hide the episode card and display a checked icon
+                    // the user has watched all the available episodes,
+                    // hide the episode card and display an icon
+                    episodeCard.setVisibility(View.INVISIBLE);
+                    show_completed.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -184,6 +195,7 @@ public class EpisodesFragment extends Fragment {
                     }
                     else{
                         // update UI with next episode
+                        refreshing = true;
                         fetchSeasons();
                         checkbox.setCheckedState(MaterialCheckBox.STATE_UNCHECKED);
                     }
