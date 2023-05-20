@@ -63,5 +63,11 @@ public class WatchedDBHelper extends DBHelper{
         return count;
     }
 
-
+    public boolean resetShow(String username, int show_id){
+        // remove all episodes corresponding to the given show from watched
+        SQLiteDatabase db = super.getWritableDatabase();
+        int result = db.delete(TABLE_NAME, "user = ? and show_id = ?", new String[]{username, String.valueOf(show_id)});
+        // at least 1 row must be affected for the deletion to be successful
+        return result > 0;
+    }
 }

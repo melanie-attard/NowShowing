@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -43,6 +44,7 @@ public class EpisodesFragment extends Fragment {
     private TextView date;
     private MaterialCheckBox checkbox;
     private LinearProgressIndicator progressIndicator;
+    private Button reset_btn;
     private RelativeLayout episodeCard;
     private SeasonsAdapter adapter;
     private RecyclerView recyclerView;
@@ -73,6 +75,7 @@ public class EpisodesFragment extends Fragment {
         date = view.findViewById(R.id.ep_release_date);
         progressIndicator = view.findViewById(R.id.progress_indicator);
         checkbox = view.findViewById(R.id.set_watched);
+        reset_btn = view.findViewById(R.id.reset_show_btn);
         episodeCard = view.findViewById(R.id.card_container);
 
         // set up the recycler view adapter and layout manager
@@ -84,7 +87,15 @@ public class EpisodesFragment extends Fragment {
         // get list of seasons
         fetchSeasons();
 
-        // TODO add option to reset progress
+        // defining on-click listener to reset progress
+        reset_btn.setOnClickListener(view1 -> {
+            // delete all episodes from the watched table
+            watchedDB.resetShow(user, show_id);
+            // reset UI
+            refreshing = true;
+            fetchSeasons();
+        });
+
         return view;
     }
 
@@ -112,6 +123,10 @@ public class EpisodesFragment extends Fragment {
             if(watched == 0){
                 // get the first episode of the first season
                 RestRepository.getInstance().fetchEpisodes(show_id, 1, 1).observe(getViewLifecycleOwner(), this::updateEpisode);
+
+                // ensure the card is visible
+                episodeCard.setVisibility(View.VISIBLE);
+                show_completed.setVisibility(View.INVISIBLE);
             }
             else{
                 // calculate which episode is next

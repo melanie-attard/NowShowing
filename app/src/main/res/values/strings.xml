@@ -26,6 +26,7 @@
     <string name="next_episode">Next to Watch:</string>
     <string name="ep_img_description">Episode Image</string>
     <string name="checkbox_description">Set episode as watched</string>
+    <string name="reset_progress">Reset Show Progress (Unwatch All)</string>
 
     <string name="season_header">Season</string>
     <string name="ep_count">episodes</string>
