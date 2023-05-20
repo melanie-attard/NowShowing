@@ -53,6 +53,19 @@ public class LoginActivity extends AppCompatActivity {
                 username.setError(null);
                 password.setError("This field is required");
             }
+            else if(user.length() > username.getCounterMaxLength() && pass.length() > password.getCounterMaxLength()){
+                // check that all inputs are of the required length
+                username.setError("Username cannot be longer than " + username.getCounterMaxLength() + " characters");
+                password.setError("Password cannot be longer than " + password.getCounterMaxLength() + " characters");
+            }
+            else if(pass.length() > password.getCounterMaxLength()){
+                password.setError("Password cannot be longer than " + password.getCounterMaxLength() + " characters");
+                username.setError(null);
+            }
+            else if(user.length() > username.getCounterMaxLength()){
+                username.setError("Username cannot be longer than " + username.getCounterMaxLength() + " characters");
+                password.setError(null);
+            }
             else{
                 // reset error messages
                 username.setError(null);

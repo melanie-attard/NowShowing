@@ -89,11 +89,16 @@ public class EpisodesFragment extends Fragment {
 
         // defining on-click listener to reset progress
         reset_btn.setOnClickListener(view1 -> {
-            // delete all episodes from the watched table
-            watchedDB.resetShow(user, show_id);
-            // reset UI
-            refreshing = true;
-            fetchSeasons();
+            if(user != null){
+                // delete all episodes from the watched table
+                watchedDB.resetShow(user, show_id);
+                // reset UI
+                refreshing = true;
+                fetchSeasons();
+            }
+            else {
+                Toast.makeText(view.getContext(), "Please log in to access this feature", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return view;
