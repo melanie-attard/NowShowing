@@ -75,50 +75,52 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
 
-            // check if email has a valid form, inspired by https://www.javatpoint.com/java-email-validation
-            Pattern pemail = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
-            Matcher m = pemail.matcher(Email);
-            if(!m.matches()){ email.setError("Email is not in a valid format"); error = true; }
+            if(!error){
+                // check if email has a valid form, inspired by https://www.javatpoint.com/java-email-validation
+                Pattern pemail = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+                Matcher m = pemail.matcher(Email);
+                if(!m.matches()){ email.setError("Email is not in a valid format"); error = true; }
 
-            // password must have at least six letters
-            if(pass.length() < 6){ password.setError("Password must have at least six letters"); error = true; }
+                // password must have at least six letters
+                if(pass.length() < 6){ password.setError("Password must have at least six letters"); error = true; }
 
-            // check that password is equal to the confirmed password
-            if(!pass.equals(confirmpass)) {
-                password.setError("Passwords don't match");
-                repassword.setError("Passwords don't match");
-                error = true;
-            }
+                // check that password is equal to the confirmed password
+                if(!pass.equals(confirmpass)) {
+                    password.setError("Passwords don't match");
+                    repassword.setError("Passwords don't match");
+                    error = true;
+                }
 
-            // check whether username already exists
-            if(DB.checkUsername(user)){
-                username.setError("This username already exists");
-                error = true;
-            }
-            else if(user.equals(" ")){
-                username.setError("Username cannot be empty");
-                error = true;
-            }
+                // check whether username already exists
+                if(DB.checkUsername(user)){
+                    username.setError("This username already exists");
+                    error = true;
+                }
+                else if(user.equals(" ")){
+                    username.setError("Username cannot be empty");
+                    error = true;
+                }
 
-            // check that all inputs are of the required length
-            if(user.length() > username.getCounterMaxLength()){
-                username.setError("Username cannot be longer than " + username.getCounterMaxLength() + " characters");
-                error = true;
-            }
+                // check that all inputs are of the required length
+                if(user.length() > username.getCounterMaxLength()){
+                    username.setError("Username cannot be longer than " + username.getCounterMaxLength() + " characters");
+                    error = true;
+                }
 
-            if(pass.length() > password.getCounterMaxLength()){
-                password.setError("Password cannot be longer than " + password.getCounterMaxLength() + " characters");
-                error = true;
-            }
+                if(pass.length() > password.getCounterMaxLength()){
+                    password.setError("Password cannot be longer than " + password.getCounterMaxLength() + " characters");
+                    error = true;
+                }
 
-            if(Email.length() > email.getCounterMaxLength()){
-                email.setError("Email cannot be longer than " + email.getCounterMaxLength() + " characters");
-                error = true;
-            }
+                if(Email.length() > email.getCounterMaxLength()){
+                    email.setError("Email cannot be longer than " + email.getCounterMaxLength() + " characters");
+                    error = true;
+                }
 
-            if(confirmpass.length() > repassword.getCounterMaxLength()){
-                repassword.setError("Password cannot be longer than " + repassword.getCounterMaxLength() + " characters");
-                error = true;
+                if(confirmpass.length() > repassword.getCounterMaxLength()){
+                    repassword.setError("Password cannot be longer than " + repassword.getCounterMaxLength() + " characters");
+                    error = true;
+                }
             }
 
             // if no errors are present, enter the user into the database
