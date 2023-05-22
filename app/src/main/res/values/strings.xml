@@ -6,6 +6,9 @@
 
     <string name="nav_header_desc">App Logo</string>
 
+    <string name="no_internet">    No network connection!
+    This application requires internet access.</string>
+
     <string name="menu_item1">Home</string>
     <string name="menu_item2">Favourites</string>
     <string name="menu_item3">Account</string>

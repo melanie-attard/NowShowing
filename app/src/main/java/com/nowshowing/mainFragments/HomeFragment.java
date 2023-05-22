@@ -1,10 +1,14 @@
 package com.nowshowing.mainFragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +28,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private ShowsAdapter adapter;
     private RecyclerView recyclerView;
+    private TextView no_internet;
     private List<Show> shows = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,12 +38,29 @@ public class HomeFragment extends Fragment {
         // this will call onPrepareOptionsMenu
         setHasOptionsMenu(true);
 
-        recyclerView = root.findViewById(R.id.home_list);
-        adapter = new ShowsAdapter(shows);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        // check for internet connectivity,
+        // inspired by https://stackoverflow.com/questions/5474089/how-to-check-currently-internet-connection-is-available-or-not-in-android#:~:text=This%20will%20tell%20if%20you%27re%20connected%20to%20a%20network
+        ConnectivityManager connectivityManager = (ConnectivityManager)root.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        fetchShows();
+        boolean connected = (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED);
+
+        if(connected){
+            // populate recycler view
+            recyclerView = root.findViewById(R.id.home_list);
+            adapter = new ShowsAdapter(shows);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
+            fetchShows();
+        }
+        else {
+            // show error message
+            //recyclerView.setVisibility(View.INVISIBLE);
+            no_internet = root.findViewById(R.id.network_error);
+            no_internet.setVisibility(View.VISIBLE);
+        }
+
         return root;
     }
 
