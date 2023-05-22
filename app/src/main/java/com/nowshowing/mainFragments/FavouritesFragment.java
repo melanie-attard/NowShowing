@@ -63,7 +63,17 @@ public class FavouritesFragment extends Fragment {
             refreshLayout.setOnRefreshListener(() -> {
                 refreshLayout.setRefreshing(false);
                 shows.clear();
-                fetchFavourites(user);
+
+                // check whether user is still logged in
+                String user2 = sharedPref.getString(getString(R.string.current_user_key), null);
+                if(user2 == null){
+                    msg.setVisibility(View.VISIBLE);
+                    msg.setText(R.string.fav_not_logged_in);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    fetchFavourites(user2);
+                }
             });
 
             // get data
